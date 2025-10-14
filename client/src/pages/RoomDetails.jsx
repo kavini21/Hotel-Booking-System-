@@ -102,9 +102,30 @@ const RoomDetails = () =>{
 
                             {/* common specification */}
 
-                            <div>
-                                
+                            <div className='mt-25 space-y-4'>
+                                {roomCommonData.map((spac, index)=>(
+                                    <div key={index} className='flex items-start gap-2'>
+                                        <img src={spec.icon} alt={`${spec.title}-icon`} className='w-6.5' />
+                                        <div>
+                                            <p className='text-base'>{spec.title}</p>
+                                            <p className='text-gray-500'>{spec.description}</p>
+                                        </div>
+        
+                                    </div>
+
+                                ))}
+
                             </div>
+                            <div className='max-w-3xl border-y border-gray-300 my-15 py-10 text-gray-500'>
+                                <p>Guests will be allocated on the ground floor according to availability. 
+                                    You get a Comfortable TWO bedroom apartment has a true city feeling. 
+                                    The price quoted is for two guest, at the guest will be allocated ground floor according to availability. 
+                                    You get the comfortable two bedroom apartment that has a true city feeling</p>
+
+
+                            </div>
+
+
                        </form>
 
         </div>
