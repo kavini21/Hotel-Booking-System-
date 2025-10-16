@@ -13,7 +13,7 @@ const Sidebar = () => {
 
 
     return(
-        <div className='md:w-16 border-r h-full text-base border-gray-300 pt-4 
+        <div className='md:w-16 w-16 border-r h-full text-base border-gray-300 pt-4 
         flex flex-col transition-all duration-300'>
             {SidebarLinks.map((item, index)=>(
                 <NavLink  to={item.path} key={index} end='/owne' className={({isActive}) =>`flex items-center py-3 px-4 md:px-8 gap-3
