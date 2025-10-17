@@ -48,7 +48,7 @@ const HotelReg = () => {
                             <label htmlFor="city" className="font-medium text-gray-500">
                               city
                             </label>
-                            <select id="city" className='className="border border-gray-200 rounded w-full px-3 py-2.5 mt-1 outline-indigo-500 font-light' required>
+                            <select id="city" className='border border-gray-200 rounded w-full px-3 py-2.5 mt-1 outline-indigo-500 font-light' required>
                                 <option value="">Select city</option>
                                 {cities.map((city) =>(
 
@@ -57,7 +57,7 @@ const HotelReg = () => {
                             )}
                             </select>
                         </div>
-                            <button className='bg-indigo-500 hover:bg-amber-600 transition-all text-white mr-auto px-6 py-2 rounded cursor-pointer mt-6'>
+                            <button className='bg-indigo-500 hover:bg-indigo-600 transition-all text-white mr-auto px-6 py-2 rounded cursor-pointer mt-6'>
                                 Register
                             </button>
 

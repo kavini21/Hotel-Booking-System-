@@ -3,7 +3,7 @@ import Title from "../components/Title";
 import {assets, userBookingsDummyData} from '../assets/assets'
 
 const Mybooking = () =>{
-const[bookings, setBookings] = useState(userBookingsDummyData)
+const[bookings, _setBookings] = useState(userBookingsDummyData)
 
     return (
      <div className='py-28 md:pb-35 md:pt-32 px-4 md:px-16 lg:px-24 xl:px-32'>
@@ -44,12 +44,12 @@ const[bookings, setBookings] = useState(userBookingsDummyData)
                     <div className='flex flex-row md:items-center md:gap-12 mt-3 gap-8'>
                         <div>
                             <p>Check-In:</p>
-                            <p className='className="text-gray-500 text-sm"'>{new Date(booking.checkInDate).toDateString()}</p>
+                            <p className='text-gray-500 text-sm'>{new Date(booking.checkInDate).toDateString()}</p>
                         </div>
 
                         <div>
                             <p>Check-Out:</p>
-                            <p className='className="text-gray-500 text-sm"'>{new Date(booking.checkOutDate).toDateString()}</p>
+                            <p className='text-gray-500 text-sm'>{new Date(booking.checkOutDate).toDateString()}</p>
                         </div>
 
                     </div>
