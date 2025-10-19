@@ -37,7 +37,7 @@ const AddRoom = () =>{
             {Object.keys(images).map((key)=>(
                 <label htmlFor={`roomImage${key}`} key={key}>
                     <img className='max-h-13 cursor-pointer opacity-80'
-                    src={images[key] ? URL.cteateObjectURL(images[key]) : assets.uploadArea} alt="" />
+                    src={images[key] ? URL.createObjectURL(images[key]) : assets.uploadArea} alt="" />
                     <input type="file" accept='image/*' id={`roomImage${key}`} hidden
                     onChange={e=> setImages({...images, [key]: e.target.files[0]})} />
                 </label>
@@ -71,7 +71,21 @@ const AddRoom = () =>{
             </div>
         </div>
 
-      
+        <p className='text-gray-800 mt-4'>
+            Amenities
+        </p>
+
+       <div className='flex flex-col flex-wrap mt-1 text-gray-400 max-w-sm'>
+           {Object.keys(inputs.amenities).map((amenity, index)=>(
+             <div key={index}>
+                <input type="checkbox" id={`amenities${
+                    index+1}`} checked={inputs.amenities[amenity]} onChange={()=>setInputs({...inputs,amenities: {...inputs.amenities, [amenity]: !inputs.amenities [amenity]}})} />
+                    <label htmlFor={`amenities${index+1}`}>{amenity}</label>
+
+             </div>
+           ))}
+       </div>
+       <button className='bg-primary text-white px-8 py-2 rounded mt-8 cursor-pointer'>Add Room</button>
 
        </form>
     )
