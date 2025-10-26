@@ -4,7 +4,7 @@ import { assets, dashboardDummyData } from "../../assets/assets";
 
 const Dashboard = () => {
 
-    const [dashboardData, setDashboardData ] = useState(dashboardDummyData )
+    const [dashboardData ] = useState(dashboardDummyData )
 
     return (
         <div>

@@ -1,8 +1,7 @@
-import { assets } from "../../client/src/assets/assets";
 import Hotel from "../models/Hotel.js";
 import { v2 as cloudinary } from "cloudinary";
 import Room from "../models/Room.js";
-import { messageInRaw } from "svix";
+// Removed client-side imports and unused dependencies
 
 // API to create a new room for a hotel
 export const createRoom = async (req, res)=>{
@@ -61,9 +60,11 @@ export const getRooms = async (req, res )=>{
 //API to get all rooms for a specific hotel
 export const getOwnerRooms = async (req, res)=>{
     try {
-        const hotelData = await Hotel({owner: req.auth.userId})
-        const rooms = await Room.find({hotel: hotelData._id.toString()}).populate
-        ("hotel");
+        const hotelData = await Hotel.findOne({ owner: req.auth.userId });
+        if (!hotelData) {
+            return res.json({ success: false, message: "No Hotel found" });
+        }
+        const rooms = await Room.find({ hotel: hotelData._id.toString() }).populate("hotel");
         res.json({success: true, rooms});
     } catch (error) {
         res.json({success: false, message: error.message});

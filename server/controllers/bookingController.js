@@ -9,7 +9,7 @@ const checkAvailability = async ({ checkInDate, checkOutDate, room})=> {
         const bookings = await Booking.find({
             room,
             checkInData: {$lte: checkOutDate},
-            checkOutData: {$gte: checkOutDate},
+            checkOutData: {$gte: checkInDate},
 
         });
         const isAvailable = bookings.length === 0;
@@ -24,7 +24,7 @@ const checkAvailability = async ({ checkInDate, checkOutDate, room})=> {
 export const checkAvailabilityAPI = async (req, res) =>{
     try {
         const { room, checkInData, checkOutData } = req.body;
-        const isAvailable = await checkAvailability({ checkInDate, checkOutData, room});
+        const isAvailable = await checkAvailability({ checkInDate: checkInData, checkOutDate: checkOutData, room});
         res.json({ success: true, isAvailable})
     } catch (error) {
         res.json({ success: false, message: error.message }) 
@@ -41,8 +41,8 @@ export const createBooking = async (req, res) => {
 
         // Befor Booking Check Availability
         const isAvailable = await checkAvailability({
-            checkInDate,
-            checkOutData, 
+            checkInDate: checkInData,
+            checkOutDate: checkOutData, 
             room
         });
 
@@ -54,8 +54,8 @@ export const createBooking = async (req, res) => {
         let totalPrice = roomData.pricePerNight;
 
         // calculate totalprice based on nights
-        const checkIn = new Data(checkInData)
-        const checkOut = new Data(checkOutData)
+        const checkIn = new Date(checkInData)
+        const checkOut = new Date(checkOutData)
         const timeDiff = checkOut.getTime() - checkIn.getTime();
         const nights = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
@@ -71,11 +71,11 @@ export const createBooking = async (req, res) => {
 
         })
 
-        res.join({ success: true, message: "Booking created successfully"})
+        res.json({ success: true, message: "Booking created successfully"})
 
     } catch (error) { 
         console.log(error);
-        res.join({ success: false, message: "failed to create booking"})
+        res.json({ success: false, message: "failed to create booking"})
 
     }
 };
@@ -84,8 +84,8 @@ export const createBooking = async (req, res) => {
  export const getUserBookings = async (req, res) =>{
     try {
         const user = req.user._id;
-        const bookings = await Booking.find({user}).populate("room hotel").Sort({createdAt: -1})
-        res.join({success: true, bookings})
+        const bookings = await Booking.find({user}).populate("room hotel").sort({createdAt: -1})
+        res.json({success: true, bookings})
     } catch (error){
         res.json({success: false, message: "Failed to fetch bookings"});
         
@@ -98,13 +98,13 @@ export const createBooking = async (req, res) => {
     if(!hotel){
         return res.json({ success: false, message: "No Hotel found"});
     }
-    const bookings = await Booking.find({hotel: hotel._id}).populate("room hotel user").Sort({ createdAt: -1});
+    const bookings = await Booking.find({hotel: hotel._id}).populate("room hotel user").sort({ createdAt: -1});
     // Total Bookings
     const totalBookings = bookings.length;
       // Total Revenue
       const totalRevenue = bookings.reduce((acc, booking)=>acc + booking.totalPrice, 0)
 
-      res.json({success: true, dashboarData: {totalBookings, totalRevenue, bookings}})
+      res.json({success: true, dashboardData: {totalBookings, totalRevenue, bookings}})
 
 
     } catch (error) {
