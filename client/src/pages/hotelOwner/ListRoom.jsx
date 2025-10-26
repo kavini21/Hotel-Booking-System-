@@ -3,7 +3,7 @@ import { roomsDummyData } from "../../assets/assets";
 import Title from "../../components/Title";
 
 const ListRoom = () => {
-    const [rooms, setRooms] = useState(roomsDummyData)
+    const [rooms] = useState(roomsDummyData)
 
     return (
         <div>
