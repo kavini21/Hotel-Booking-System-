@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import Title from "../../components/Title";
-import { assets, dashboardDummyData } from "../../assets/assets";
+import { assets,  } from "../../assets/assets";
 
 const Dashboard = () => {
 
-    const [dashboardData ] = useState(dashboardDummyData )
+    const [dashboardData, setDashboardData] = useState({} )
 
     return (
         <div>
