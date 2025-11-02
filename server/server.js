@@ -10,6 +10,7 @@ import connectCloudinary from "./configs/cloudinary.js";
 import roomRouter from "./routes/roomRoutes.js";
 import bookingRouter from "./routes/bookingRoutes.js";
 
+// Initialize connections
 connectDB()
 connectCloudinary();
  
@@ -33,4 +34,10 @@ app.use('/api/bookings', bookingRouter)
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, ()=> console.log(`Server running on port ${PORT}`)); 
+// For local development
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, ()=> console.log(`Server running on port ${PORT}`));
+}
+
+// Export for Vercel serverless
+export default app; 
