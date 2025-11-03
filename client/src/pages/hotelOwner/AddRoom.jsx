@@ -29,7 +29,7 @@ const AddRoom = () =>{
         }
     })
 
-    const [, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const onSubmitHandler = async (e)=>{
         e.preventDefault()

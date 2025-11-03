@@ -1,6 +1,10 @@
 import React from "react";
 import { assets, cities } from "../assets/assets";
+import { useAppContext } from "../context/AppContext";
+import { useClerk } from "@clerk/clerk-react";
 const Hero = ()=>{
+    const { user, isOwner, setShowHotelReg, navigate } = useAppContext();
+    const { openSignIn } = useClerk();
     return (
         <div className='flex flex-col items-start justify-center px-6 md:px-16 lg:px-24 xl:px-32 text-white bg-[url("/src/assets/heroImage.png")] bg-no-repeat bg-cover bg-center h-screen' >
             <p className='bg-[#49B9FF]/50 px-3.5 py-1 rounded-full mt-20'>The Ultimate Hotel Experience</p>
@@ -49,6 +53,19 @@ const Hero = ()=>{
                 <span>Search</span>
             </button>
         </form>
+        {/* List Your Hotel button shown when user is logged in */}
+        {user && (
+            <div className="mt-6">
+                <button onClick={() => isOwner ? navigate('/owner') : setShowHotelReg(true)} className="bg-primary text-white px-6 py-2 rounded">
+                    {isOwner ? 'Dashboard' : 'List Your Hotel'}
+                </button>
+            </div>
+        )}
+        {!user && (
+            <div className="mt-6">
+                <button onClick={openSignIn} className="bg-primary text-white px-6 py-2 rounded">Login to list</button>
+            </div>
+        )}
         </div>
     )
 }

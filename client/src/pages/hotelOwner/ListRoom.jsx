@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Title from "../../components/Title";
 import { useAppContext } from "../../context/AppContext";
 import toast from "react-hot-toast";
-import { useEffect } from "react";
 
 const ListRoom = () => {
     const [rooms, setRooms] = useState([])
@@ -31,7 +30,7 @@ const ListRoom = () => {
             toast.success(data.message)
             fetchRooms();
         } else {
-            toast.error(data.message)
+             toast.error(data.message)
         }
     }
 
@@ -43,46 +42,50 @@ const ListRoom = () => {
 
     return (
         <div>
-            <Title align='left' font='outfit' title='Room Listing' subTitle='Viwe, edit, or manage all listed room. Keep the information up-to-date to provide the best experience for users.' />
+            <Title align='left' font='outfit' title='Room Listing' subTitle='View, edit, or manage all listed rooms. Keep the information up-to-date to provide the best experience for users.' />
             <p className='text-gray-500 mt-8'>All Rooms</p>
-              <div className='w-full max-w-3xl text-left border border-gray-300 rounded-lg max-h-80 overflow-y-scroll mt-3'>
-                <table className='w-full'>
-                            <thead className='bg-gray-50'>
+              <div className='w-full max-w-3xl text-left border border-gray-300 rounded-lg max-h-80 overflow-y-auto mt-3'>
+                <table className='w-full table-fixed'>
+                    <thead className='bg-gray-50'>
                         <tr>
-                            <th className='py-3 px-4 text-gray-800 font-medium'>Name</th>
-                             <th className='py-3 px-4 text-gray-800 font-medium max-sm:hidden'>Facility</th>
-                              <th className='py-3 px-4 text-gray-800 font-medium '>Price / night</th>
-                               <th className='py-3 px-4 text-gray-800 font-medium text-center'>Actions</th>
+                            <th className='py-3 px-4 text-gray-800 font-medium text-left'>Name</th>
+                            <th className='py-3 px-4 text-gray-800 font-medium max-sm:hidden text-left'>Facility</th>
+                            <th className='py-3 px-4 text-gray-800 font-medium text-left'>Price / night</th>
+                            <th className='py-3 px-4 text-gray-800 font-medium text-center'>Actions</th>
                         </tr>
-
                     </thead>
-                    <tbody className='text-sm'>
-                        {
-                            rooms.map((item, index)=>(
-                                <tr key={index}>
-                                    <td className='py-3 px-4 text-gray-700 border-t border-gray-300'>
-                                        {item.roomType}
-                                    </td>
-                                    <td className='py-3 px-4 text-gray-700 border-t border-gray-300 max-sm:hidden'>
-                                        {item.amenities.join(',')}
-                                    </td>
-                                    <td className='py-3 px-4 text-gray-700 border-t border-gray-300 '>
-                                        {item.pricePerNight}
-                                    </td>
-                                    <td className='py-3 px-4 border-t border-gray-300 text-sm text-red-500 text-center'>
-                                        <label className='relative inline-flex items-center cursor-pointer text-gray-900 gap-3'>
-                                            <input onClick={()=> toggleAvailability(item._id)} type="checkbox " className='sr-only peer' checked={item.isAvailable} />
-                                            <div className='w-12 h-7 bg-slate-300 rounded-full peer peer-checked:bg-blue-600 transition-colors duration-200'>
-                                                </div> 
-                                                <span className="dot absolute left-1 top-1 w-5 h-5 bg-white rounded-full transition-transform duration-200 ease-in-out peer-checked:translate-x-5"></span>
 
+                    <tbody className='text-sm'>
+                        {rooms.length === 0 ? (
+                            <tr>
+                                <td colSpan={4} className='py-6 px-4 text-center text-gray-500'>No rooms found</td>
+                            </tr>
+                        ) : (
+                            rooms.map((item, index) => (
+                                <tr key={item._id || index}>
+                                    <td className='py-3 px-4 text-gray-700 border-t border-gray-300'>
+                                        {item.roomType || '—'}
+                                    </td>
+
+                                    <td className='py-3 px-4 text-gray-700 border-t border-gray-300 max-sm:hidden'>
+                                        {Array.isArray(item.amenities) && item.amenities.length ? item.amenities.join(', ') : '—'}
+                                    </td>
+
+                                    <td className='py-3 px-4 text-gray-700 border-t border-gray-300'>
+                                        {typeof item.pricePerNight === 'number' ? item.pricePerNight.toFixed(2) : item.pricePerNight || '0.00'}
+                                    </td>
+
+                                    <td className='py-3 px-4 border-t border-gray-300 text-center'>
+                                        <label className='inline-flex items-center cursor-pointer'>
+                                            <input id={`availability-${item._id}`} onChange={() => toggleAvailability(item._id)} type="checkbox" className='sr-only peer' checked={!!item.isAvailable} aria-checked={!!item.isAvailable} />
+                                            <div className='w-12 h-7 bg-slate-300 rounded-full peer peer-checked:bg-blue-600 transition-colors duration-200 relative'>
+                                                <span className="absolute left-1 top-1 w-5 h-5 bg-white rounded-full transition-transform duration-200 ease-in-out peer-checked:translate-x-5" />
+                                            </div>
                                         </label>
-                                        
                                     </td>
                                 </tr>
                             ))
-                        }
-
+                        )}
                     </tbody>
                 </table>
               </div>

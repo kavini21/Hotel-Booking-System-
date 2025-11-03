@@ -2,7 +2,12 @@ import express from "express"
 import "dotenv/config";
 import cors from "cors";
 import connectDB from "./configs/db.js";
-import { clerkMiddleware } from '@clerk/express'
+// Import Clerk express SDK. The package's ESM entry may reference build chunks that
+// are missing in some installs; import the CommonJS build directly for compatibility.
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const clerkExpressPkg = require('@clerk/express');
+const { clerkMiddleware } = clerkExpressPkg;
 import clerkWebhooks from "./controllers/clerkWebhooks.js";
 import userRouter from "./routes/userRoutes.js";
 import hotelRouter from "./routes/hotelRoutes.js";
