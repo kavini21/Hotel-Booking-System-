@@ -71,7 +71,7 @@ export const createBooking = async (req, res) => {
             totalPrice
 
         })
-
+            // content of email
         const mailOptions = {
             from: process.env.SENDER_EMAIL,
             to: req.user.email,

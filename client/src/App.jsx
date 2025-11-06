@@ -7,10 +7,10 @@ import AllRooms from "./pages/AllRooms";
 import RoomDetails from "./pages/RoomDetails";
 import Mybooking from "./pages/Mybooking";
 import HotelReg from "./components/HotelReg";
-import Layout from "./pages/Hotelowner/Layout";
-import Dashboard from "./pages/Hotelowner/Dashboard";
-import AddRoom from "./pages/Hotelowner/Addroom";
-import ListRoom from "./pages/hotelowner/ListRoom";
+import Layout from "./pages/hotelOwner/Layout";
+import Dashboard from "./pages/hotelOwner/Dashboard";
+import AddRoom from "./pages/hotelOwner/AddRoom";
+import ListRoom from "./pages/hotelOwner/ListRoom";
 import {Toaster} from "react-hot-toast"
 import { useAppContext } from "./context/AppContext";
 
